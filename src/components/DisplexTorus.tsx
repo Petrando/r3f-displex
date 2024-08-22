@@ -2,6 +2,7 @@
 /* @typescript-eslint/no-unused-vars */
 import { useRef, useMemo } from "react"
 import { useFrame } from "@react-three/fiber"
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from "three"
 import { useControls } from "leva"
 
@@ -152,14 +153,24 @@ export const Torus = () => {
     })
 
     return (
-        <mesh ref={torusRef}>
-            <torusGeometry args={[1, 0.3, 100, 100]} />
-            <shaderMaterial
-                vertexShader={vertex}
-                fragmentShader={fragment}
-                uniforms={uniforms}
-                side={THREE.DoubleSide}
-            />
-        </mesh>
+        <>
+            <mesh ref={torusRef}>
+                <torusGeometry args={[1, 0.3, 100, 100]} />
+                <shaderMaterial
+                    vertexShader={vertex}
+                    fragmentShader={fragment}
+                    uniforms={uniforms}
+                    side={THREE.DoubleSide}
+                />
+            </mesh>
+            <EffectComposer>
+                <Bloom
+                    intensity={1.4} // similar to strength
+                    luminanceThreshold={0.0001} // similar to threshold
+                    luminanceSmoothing={0.01}  // similar to radius
+                    height={300} // adjust based on resolution
+                />
+            </EffectComposer>
+        </>
     )
 }
