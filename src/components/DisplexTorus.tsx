@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* @typescript-eslint/no-unused-vars */
 import { useRef, useMemo } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
+import { useControls } from "leva"
 
 const vertex = `
     varying vec3 vPosition;
@@ -122,12 +124,19 @@ const fragment = `
 
 export const Torus = () => {
     const torusRef = useRef<THREE.Mesh>(null)
+
+    const { u_Displace, u_Spread, u_Noise } = useControls({ 
+        u_Displace: {value: 2, min: 0, max: 2, step: 0.1, label: 'displacement' }, 
+        u_Spread: { value: 1.2, min: 0, max: 2, step: 0.1, label: 'spread' },
+        u_Noise: { value: 16, min: 10, max: 25, step: 0.1, label: 'noise' },        
+      })
+
     const uniforms: { [uniform: string]: THREE.IUniform<any> } = useMemo(() => ({
         uTime: { value: 0 },
         uResolution: { value: new THREE.Vector2() },
-        uDisplace: { value: 2 },
-        uSpread: { value: 1.2 },
-        uNoise: { value: 16 },
+        uDisplace: { value: u_Displace },
+        uSpread: { value: u_Spread },
+        uNoise: { value: u_Noise },
     }), []);
 
     useFrame((state)=>{
@@ -135,6 +144,10 @@ export const Torus = () => {
         if(torusRef.current){
             const material = torusRef.current.material as THREE.ShaderMaterial
             material.uniforms.uTime.value = t
+
+            material.uniforms.uDisplace.value = u_Displace
+            material.uniforms.uSpread.value = u_Spread
+            material.uniforms.uNoise.value = u_Noise
         }
     })
 
