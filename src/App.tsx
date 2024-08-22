@@ -1,7 +1,6 @@
-import { useState, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
-import { EffectComposer, Vignette } from "@react-three/postprocessing";
 import {Torus } from "./components/DisplexTorus.tsx"
 import './App.css'
 
