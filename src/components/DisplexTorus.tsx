@@ -132,6 +132,10 @@ export const Torus = () => {
 
     useFrame((state)=>{
         const t = state.clock.getElapsedTime()
+        if(torusRef.current){
+            const material = torusRef.current.material as THREE.ShaderMaterial
+            material.uniforms.uTime.value = t
+        }
     })
 
     return (
