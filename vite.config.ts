@@ -9,23 +9,64 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      },
       devOptions: {
         enabled: true,
       },
       manifest: {
-        name: 'Your App Name',
-        short_name: 'AppName',
-        description: 'Your app description',
-        theme_color: '#ffffff',
+        name: 'r3f-image-distortion',
+        short_name: 'img-particles',
+        description: 'Particles image technique with threeJs',
+        theme_color: '#FFFFFF',
+        background_color: '#E8EBF2',
         icons: [
           {
-            src: '/displex-icon.png',
-            sizes: '498x501',
+            src: '/android-chrome-192x192.png',
+            sizes: '192x192',
             type: 'image/png',
           },
-          
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: '/apple-touch-icon.png',
+            sizes: '180x180',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          }          
         ],
+        display: "standalone",
+        scope: "/",
+        start_url: "/",
+        orientation: "portrait"
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        // Ensure service-worker.js is in the build output
+        sw: './public/service-worker.js',
+      },
+    },
+  },
 })
