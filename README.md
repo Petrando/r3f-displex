@@ -1,3 +1,10 @@
+# About
+
+Abstract Animation With ThreeJS and GLSL. Originally written in threeJs, I convert this to reactJs.
+
+If you like to see the original threeJs based tutorial, the link is :
+https://www.youtube.com/watch?v=ixEPBzrhgTg
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
